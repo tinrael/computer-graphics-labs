@@ -4,8 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainWindow extends JFrame {
-    private final int WIDTH = 700;
-    private final int HEIGHT = 400;
+    private final int WIDTH = 900;
+    private final int HEIGHT = 600;
 
     private final Point originPoint;
     private final Polygon polygon;
@@ -30,6 +30,15 @@ public class MainWindow extends JFrame {
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation(screenSize.width / 2 - getSize().width / 2, screenSize.height / 2 - getSize().height / 2);
+    }
+
+    private void translateAxes() {
+        int n = polygon.npoints;
+
+        for (int i = 0; i < n; i++) {
+            polygon.xpoints[i] = originPoint.x + polygon.xpoints[i];
+            polygon.ypoints[i] = originPoint.y - polygon.ypoints[i];
+        }
     }
 
     private void drawCoordinateAxes(Graphics graphics) {
@@ -74,6 +83,8 @@ public class MainWindow extends JFrame {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+
+        translateAxes();
 
         drawCoordinateAxes(g);
         drawOriginPoint(g);
