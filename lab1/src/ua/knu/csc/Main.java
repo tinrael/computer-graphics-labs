@@ -7,15 +7,16 @@ import java.awt.*;
 public class Main {
 
     public static void main(String[] args) {
-        Point originPoint = new Point(20, 200);
+        Point originPoint = new Point(200, 300);
 
-        int[] x = {50, 150, 150, 50};
-        int[] y = {50, 50, 100, 100};
         int n = 4;
+        int[] x = {10, 10, 100, 100};
+        int[] y = {10, 50, 50, 10};
 
         Polygon polygon = new Polygon(x, y, n);
+        Point point = new Point(100, 50);
 
-        MainWindow mainWindow = new MainWindow("lab1", originPoint, polygon);
+        MainWindow mainWindow = new MainWindow("lab1", originPoint, polygon, point);
         mainWindow.setVisible(true);
     }
 }
