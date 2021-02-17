@@ -8,9 +8,11 @@ public class MainWindow extends JFrame {
     private final int HEIGHT = 600;
 
     private final Point originPoint;
-    private final Polygon polygon;
 
-    public MainWindow(String title, Point originPoint, Polygon polygon) throws NullPointerException {
+    private final Polygon polygon;
+    private final Point point;
+
+    public MainWindow(String title, Point originPoint, Polygon polygon, Point point) throws NullPointerException {
         super(title);
 
         if (originPoint == null) {
@@ -21,8 +23,15 @@ public class MainWindow extends JFrame {
             throw new NullPointerException("The specified polygon is null.");
         }
 
+        if (point == null) {
+            throw new NullPointerException("The specified point is null.");
+        }
+
         this.originPoint = originPoint;
         this.polygon = polygon;
+        this.point = point;
+
+        translateAxes();
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new FlowLayout());
@@ -34,11 +43,13 @@ public class MainWindow extends JFrame {
 
     private void translateAxes() {
         int n = polygon.npoints;
-
         for (int i = 0; i < n; i++) {
             polygon.xpoints[i] = originPoint.x + polygon.xpoints[i];
             polygon.ypoints[i] = originPoint.y - polygon.ypoints[i];
         }
+
+        point.x = originPoint.x + point.x;
+        point.y = originPoint.y - point.y;
     }
 
     private void drawCoordinateAxes(Graphics graphics) {
@@ -59,18 +70,6 @@ public class MainWindow extends JFrame {
         graphics2D.drawLine(x, y, x, y - AXIS_LENGTH);
     }
 
-    private void drawOriginPoint(Graphics graphics) {
-        Graphics2D graphics2D = (Graphics2D) graphics;
-
-        graphics2D.setColor(Color.RED);
-        graphics2D.setStroke(new BasicStroke(5f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_MITER));
-
-        int x = originPoint.x;
-        int y = originPoint.y;
-
-        graphics2D.drawLine(x, y, x, y);
-    }
-
     private void drawPolygon(Graphics graphics) {
         Graphics2D graphics2D = (Graphics2D) graphics;
 
@@ -80,14 +79,26 @@ public class MainWindow extends JFrame {
         graphics2D.drawPolygon(polygon);
     }
 
+    private void drawPoint(Graphics graphics, Point point, Color color, float width) {
+        Graphics2D graphics2D = (Graphics2D) graphics;
+
+        graphics2D.setColor(color);
+        graphics2D.setStroke(new BasicStroke(width, BasicStroke.CAP_ROUND, BasicStroke.JOIN_MITER));
+
+        int x = point.x;
+        int y = point.y;
+
+        graphics2D.drawLine(x, y, x, y);
+    }
+
     @Override
     public void paint(Graphics g) {
         super.paint(g);
 
-        translateAxes();
-
         drawCoordinateAxes(g);
-        drawOriginPoint(g);
+        drawPoint(g, originPoint, Color.RED, 5f);
+
         drawPolygon(g);
+        drawPoint(g, point, Color.ORANGE, 7f);
     }
 }
