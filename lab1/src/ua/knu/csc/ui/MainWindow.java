@@ -91,6 +91,18 @@ public class MainWindow extends JFrame {
         graphics2D.drawLine(x, y, x, y);
     }
 
+    private void drawRay(Graphics graphics, Point point) {
+        Graphics2D graphics2D = (Graphics2D) graphics;
+
+        graphics2D.setColor(Color.GRAY);
+        graphics2D.setStroke(new BasicStroke(2f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_MITER));
+
+        int x = point.x;
+        int y = point.y;
+
+        graphics2D.drawLine(x, y, Toolkit.getDefaultToolkit().getScreenSize().width, y);
+    }
+
     @Override
     public void paint(Graphics g) {
         super.paint(g);
@@ -99,6 +111,7 @@ public class MainWindow extends JFrame {
         drawPoint(g, originPoint, Color.RED, 5f);
 
         drawPolygon(g);
+        drawRay(g, point);
         drawPoint(g, point, Color.ORANGE, 7f);
     }
 }
