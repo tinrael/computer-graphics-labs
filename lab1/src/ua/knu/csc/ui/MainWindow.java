@@ -1,5 +1,7 @@
 package ua.knu.csc.ui;
 
+import java.util.Arrays;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -27,9 +29,9 @@ public class MainWindow extends JFrame {
             throw new NullPointerException("The specified point is null.");
         }
 
-        this.originPoint = originPoint;
-        this.polygon = polygon;
-        this.point = point;
+        this.originPoint = new Point(originPoint);
+        this.polygon = new Polygon(Arrays.copyOf(polygon.xpoints, polygon.npoints), Arrays.copyOf(polygon.ypoints, polygon.npoints), polygon.npoints);
+        this.point = new Point(point);
 
         translateAxes();
 
