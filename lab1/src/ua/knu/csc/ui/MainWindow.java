@@ -66,7 +66,7 @@ public class MainWindow extends JFrame {
         int x = originPoint.x;
         int y = originPoint.y;
 
-        final int AXIS_LENGTH = 200;
+        final int AXIS_LENGTH = 300;
 
         graphics2D.drawLine(x, y, x + AXIS_LENGTH, y);
         graphics2D.drawLine(x, y, x, y - AXIS_LENGTH);
@@ -110,10 +110,10 @@ public class MainWindow extends JFrame {
         super.paint(g);
 
         drawCoordinateAxes(g);
-        drawPoint(g, originPoint, Color.RED, 5f);
+        drawPoint(g, originPoint, Color.ORANGE, 7f);
 
         drawPolygon(g);
         drawRay(g, point);
-        drawPoint(g, point, Color.ORANGE, 7f);
+        drawPoint(g, point, Color.RED, 9f);
     }
 }
