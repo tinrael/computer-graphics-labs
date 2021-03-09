@@ -6,6 +6,8 @@ import java.util.*;
 public class Digraph {
     private final Map<Vertex, List<Vertex>> adjacencyList = new HashMap<>();
 
+    private final Map<Vertex, Integer> indegree = new HashMap<>();
+
     private void validateVertex(Vertex vertex) {
         if (!adjacencyList.containsKey(vertex)) {
             throw new NoSuchElementException("The specified vertex " + vertex + " is not in the graph.");
@@ -17,26 +19,45 @@ public class Digraph {
             throw new NullPointerException("The specified vertex is null.");
         }
         adjacencyList.putIfAbsent(vertex, new LinkedList<>());
+        indegree.putIfAbsent(vertex, 0);
     }
 
     public void removeVertex(Vertex vertex) {
         validateVertex(vertex);
+
+        adjacencyList.get(vertex).forEach(to -> indegree.put(to, indegree.get(to) - 1));
+
         adjacencyList.values().forEach(list -> list.remove(vertex));
         adjacencyList.remove(vertex);
+
+        indegree.remove(vertex);
     }
 
     public void addEdge(Vertex from, Vertex to) {
         validateVertex(from);
         validateVertex(to);
+
         adjacencyList.get(from).add(to);
+
+        indegree.put(to, indegree.get(to) + 1);
     }
 
     public void removeEdge(Vertex from, Vertex to) {
         validateVertex(from);
         validateVertex(to);
+
         adjacencyList.get(from).remove(to);
+
+        indegree.put(to, indegree.get(to) - 1);
     }
 
+    // The indegree of a vertex is the number of edges pointing to it.
+    public int getIndegree(Vertex vertex) {
+        validateVertex(vertex);
+        return indegree.get(vertex);
+    }
+
+    // The outdegree of a vertex is the number of edges pointing from it.
     public int getOutdegree(Vertex vertex) {
         validateVertex(vertex);
         return adjacencyList.get(vertex).size();
