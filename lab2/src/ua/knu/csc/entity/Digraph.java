@@ -8,6 +8,7 @@ public class Digraph {
 
     private final Map<Vertex, Integer> indegree = new HashMap<>();
 
+    // checks if the specified vertex is in the graph
     private void validateVertex(Vertex vertex) {
         if (!adjacencyList.containsKey(vertex)) {
             throw new NoSuchElementException("The specified vertex " + vertex + " is not in the graph.");
@@ -49,6 +50,12 @@ public class Digraph {
         adjacencyList.get(from).remove(to);
 
         indegree.put(to, indegree.get(to) - 1);
+    }
+
+    // Returns the vertices adjacent from the specified vertex in this digraph.
+    public Iterable<Vertex> getVerticesAdjacentFrom(Vertex vertex) {
+        validateVertex(vertex);
+        return adjacencyList.get(vertex);
     }
 
     // The indegree of a vertex is the number of edges pointing to it.
