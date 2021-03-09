@@ -37,6 +37,11 @@ public class Digraph {
         adjacencyList.get(from).remove(to);
     }
 
+    public int getOutdegree(Vertex vertex) {
+        validateVertex(vertex);
+        return adjacencyList.get(vertex).size();
+    }
+
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
