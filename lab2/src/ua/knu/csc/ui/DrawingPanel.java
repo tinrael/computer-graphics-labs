@@ -1,5 +1,8 @@
 package ua.knu.csc.ui;
 
+import ua.knu.csc.entity.DirectedEdge;
+import ua.knu.csc.entity.EdgeWeightedDigraph;
+
 import java.awt.*;
 
 import javax.swing.BorderFactory;
@@ -8,11 +11,20 @@ import javax.swing.JPanel;
 public class DrawingPanel extends JPanel {
     private final Point origin;
 
-    public DrawingPanel(Point origin) {
+    private final EdgeWeightedDigraph edgeWeightedDigraph;
+
+    public DrawingPanel(Point origin, EdgeWeightedDigraph edgeWeightedDigraph) {
         if (origin == null) {
             throw new NullPointerException("The specified origin is null.");
         }
+
+        if (edgeWeightedDigraph == null) {
+            throw new NullPointerException("The specified 'edgeWeightedDigraph' is null.");
+        }
+
         this.origin = origin;
+        this.edgeWeightedDigraph = edgeWeightedDigraph;
+
         setBorder(BorderFactory.createLineBorder(Color.RED, 2));
     }
 
@@ -30,7 +42,7 @@ public class DrawingPanel extends JPanel {
     }
 
     private void drawOrigin(Graphics2D graphics2D) {
-        graphics2D.setColor(Color.RED);
+        graphics2D.setColor(Color.ORANGE);
         graphics2D.setStroke(new BasicStroke(7f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_MITER));
 
         graphics2D.drawLine(origin.x, origin.y, origin.x, origin.y);
@@ -46,6 +58,31 @@ public class DrawingPanel extends JPanel {
         graphics2D.drawLine(x, y, x, y);
     }
 
+    private void drawLine(Graphics2D graphics2D, Point point1, Point point2, Color color, float width) {
+        graphics2D.setColor(color);
+        graphics2D.setStroke(new BasicStroke(width));
+
+        int x1 = origin.x + point1.x;
+        int y1 = origin.y - point1.y;
+
+        int x2 = origin.x + point2.x;
+        int y2 = origin.y - point2.y;
+
+        graphics2D.drawLine(x1, y1, x2, y2);
+    }
+
+    private void drawEdgeWeightedDigraph(Graphics2D graphics2D) {
+        for (DirectedEdge directedEdge : edgeWeightedDigraph.getEdges()) {
+            Point from = new Point(directedEdge.getFrom().getX(), directedEdge.getFrom().getY());
+            Point to = new Point(directedEdge.getTo().getX(), directedEdge.getTo().getY());
+
+            drawLine(graphics2D, from, to, Color.BLUE, 3f);
+
+            drawPoint(graphics2D, from, Color.RED, 7f);
+            drawPoint(graphics2D, to, Color.RED, 7f);
+        }
+    }
+
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(900,600);
@@ -57,5 +94,7 @@ public class DrawingPanel extends JPanel {
 
         drawCoordinateAxes((Graphics2D) g);
         drawOrigin((Graphics2D) g);
+
+        drawEdgeWeightedDigraph((Graphics2D) g);
     }
 }
