@@ -51,4 +51,21 @@ public class EdgeWeightedDigraph {
         validateVertex(vertex);
         return adjacencyList.get(vertex).size();
     }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (Map.Entry<Vertex, List<DirectedEdge>> entry : adjacencyList.entrySet()) {
+            stringBuilder.append(entry.getKey()).append(": ");
+
+            for (DirectedEdge directedEdge : entry.getValue()) {
+                stringBuilder.append("[").append(directedEdge).append("] ");
+            }
+
+            stringBuilder.append(System.getProperty("line.separator"));
+        }
+
+        return stringBuilder.toString();
+    }
 }
