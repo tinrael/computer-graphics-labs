@@ -17,7 +17,7 @@ public class DrawingPanel extends JPanel {
     }
 
     private void drawCoordinateAxes(Graphics2D graphics2D) {
-        final int AXIS_LENGTH = 300;
+        final int AXIS_LENGTH = 350;
 
         graphics2D.setColor(Color.GRAY);
 
@@ -27,6 +27,13 @@ public class DrawingPanel extends JPanel {
 
         graphics2D.drawLine(origin.x, origin.y, origin.x + AXIS_LENGTH, origin.y);
         graphics2D.drawLine(origin.x, origin.y, origin.x, origin.y - AXIS_LENGTH);
+    }
+
+    private void drawOrigin(Graphics2D graphics2D) {
+        graphics2D.setColor(Color.RED);
+        graphics2D.setStroke(new BasicStroke(7f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_MITER));
+
+        graphics2D.drawLine(origin.x, origin.y, origin.x, origin.y);
     }
 
     private void drawPoint(Graphics2D graphics2D, Point point, Color color, float width) {
@@ -49,5 +56,6 @@ public class DrawingPanel extends JPanel {
         super.paintComponent(g);
 
         drawCoordinateAxes((Graphics2D) g);
+        drawOrigin((Graphics2D) g);
     }
 }
