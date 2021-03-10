@@ -34,6 +34,17 @@ public class EdgeWeightedDigraph {
         indegree.put(to, indegree.get(to) + 1);
     }
 
+    // Returns all directed edges in this edge-weighted digraph.
+    public Iterable<DirectedEdge> getEdges() {
+        List<DirectedEdge> edges = new LinkedList<>();
+
+        for (Map.Entry<Vertex, List<DirectedEdge>> entry : adjacencyList.entrySet()) {
+            edges.addAll(entry.getValue());
+        }
+
+        return edges;
+    }
+
     // Returns the directed edges incident from vertex.
     public Iterable<DirectedEdge> getVerticesAdjacentFrom(Vertex vertex) {
         validateVertex(vertex);
