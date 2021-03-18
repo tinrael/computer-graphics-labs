@@ -79,4 +79,58 @@ public class EdgeWeightedDigraph {
 
         return stringBuilder.toString();
     }
+
+    /* Returns the leftmost directed edge.
+     * The leftmost directed edge is a directed edge which vertex to() has the biggest polar angle.
+     * The polar angle is calculated with reference to the origin (from().getX(), from.getY()),
+     * i.e. calculatePolarAngle(to.getX() - from.getX(), to.getY() - from.getY()).
+     */
+    public static DirectedEdge getLeftmostDirectedEdge(Iterable<DirectedEdge> adjacentDirectedEdges) {
+        if (adjacentDirectedEdges == null) {
+            throw new NullPointerException("The specified 'adjacentDirectedEdges' is null.");
+        }
+
+        DirectedEdge leftmostDirectedEdge = null;
+
+        Iterator<DirectedEdge> iterator = adjacentDirectedEdges.iterator();
+        if (iterator.hasNext()) {
+            leftmostDirectedEdge = iterator.next();
+
+            if (leftmostDirectedEdge == null) {
+                throw new NullPointerException("The specified 'adjacentDirectedEdges' contain null element(s).");
+            }
+
+            int originX = leftmostDirectedEdge.getFrom().getX();
+            int originY = leftmostDirectedEdge.getFrom().getY();
+
+            int x = leftmostDirectedEdge.getTo().getX();
+            int y = leftmostDirectedEdge.getTo().getY();
+
+            double biggestPolarAngle = Point.calculatePolarAngle(x - originX, y - originY);
+
+            while (iterator.hasNext()) {
+                DirectedEdge currentDirectedEdge = iterator.next();
+
+                if (currentDirectedEdge == null) {
+                    throw new NullPointerException("The specified 'adjacentDirectedEdges' contain null element(s).");
+                }
+
+                if ((currentDirectedEdge.getFrom().getX() != originX) || (currentDirectedEdge.getFrom().getY() != originY)) {
+                    throw new IllegalArgumentException("The specified 'adjacentDirectedEdges' are not adjacent directed edges.");
+                }
+
+                x = currentDirectedEdge.getTo().getX();
+                y = currentDirectedEdge.getTo().getY();
+
+                double currentPolarAngle = Point.calculatePolarAngle(x - originX, y - originY);
+
+                if (currentPolarAngle > biggestPolarAngle) {
+                    leftmostDirectedEdge = currentDirectedEdge;
+                    biggestPolarAngle = currentPolarAngle;
+                }
+            }
+        }
+
+        return leftmostDirectedEdge;
+    }
 }
