@@ -1,6 +1,10 @@
 package ua.knu.csc.core;
 
 import java.util.Iterator;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.ArrayList;
+
 import java.awt.Point;
 
 public class QuickHull {
@@ -110,5 +114,49 @@ public class QuickHull {
         }
 
         return farthestPoint;
+    }
+
+    public static ArrayList<Point> findConvexHull(Iterable<Point> points) {
+        ArrayList<Point> convexHullPoints = new ArrayList<>();
+
+        Point leftmostPoint = getLeftmostPoint(points);
+        Point rightmostPoint = new Point(leftmostPoint.x, leftmostPoint.y - 1);
+
+        convexHullPoints.add(leftmostPoint);
+        convexHullPoints.add(rightmostPoint);
+
+        findConvexHull(convexHullPoints, points, leftmostPoint, rightmostPoint);
+
+        convexHullPoints.remove(rightmostPoint);
+
+        return convexHullPoints;
+    }
+
+    private static void findConvexHull(ArrayList<Point> convexHullPoints, Iterable<Point> s1, Point leftmostPoint, Point rightmostPoint) {
+        if (!s1.iterator().hasNext()) {
+            return;
+        }
+
+        Point farthestPoint = findFarthestPointFromLineSegment(s1, leftmostPoint, rightmostPoint);
+
+        convexHullPoints.add(convexHullPoints.indexOf(rightmostPoint), farthestPoint);
+
+        Set<Point> s11 = new HashSet<>();
+        Set<Point> s12 = new HashSet<>();
+
+        for (Point p : s1) {
+            PointAndLineLocationType pointAndLineLocationType = classify(leftmostPoint, farthestPoint, p);
+
+            if (pointAndLineLocationType == PointAndLineLocationType.LEFT) {
+                s11.add(p);
+            } else if (pointAndLineLocationType == PointAndLineLocationType.RIGHT) {
+                if (classify(farthestPoint, rightmostPoint, p) == PointAndLineLocationType.LEFT) {
+                    s12.add(p);
+                }
+            }
+        }
+
+        findConvexHull(convexHullPoints, s11, leftmostPoint, farthestPoint);
+        findConvexHull(convexHullPoints, s12, farthestPoint, rightmostPoint);
     }
 }
