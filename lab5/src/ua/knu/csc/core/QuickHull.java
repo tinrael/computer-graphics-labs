@@ -1,5 +1,6 @@
 package ua.knu.csc.core;
 
+import java.util.Iterator;
 import java.awt.Point;
 
 public class QuickHull {
@@ -54,5 +55,35 @@ public class QuickHull {
     // Calculates twice the area of a triangle.
     public static int calculateTwiceAreaOfTriangle(Point p1, Point p2, Point p3) {
         return ((p1.x - p3.x) * (p2.y - p3.y) - (p2.x - p3.x) * (p1.y - p3.y));
+    }
+
+    // From the given 'points', finds the farthest point from the line segment PQ.
+    public static Point findFarthestPointFromLineSegment(Iterable<Point> points, Point p, Point q) {
+        if (points == null) {
+            throw new NullPointerException("The specified 'points' argument is null.");
+        }
+
+        Point farthestPoint = null;
+
+        Iterator<Point> iterator = points.iterator();
+
+        if (iterator.hasNext()) {
+            farthestPoint = iterator.next();
+
+            int twiceAreaOfTriangle = calculateTwiceAreaOfTriangle(p, q, farthestPoint);
+
+            while (iterator.hasNext()) {
+                Point currentPoint = iterator.next();
+
+                int currentTwiceAreaOfTriangle = calculateTwiceAreaOfTriangle(p, q, currentPoint);
+
+                if (currentTwiceAreaOfTriangle > twiceAreaOfTriangle) {
+                    farthestPoint = currentPoint;
+                    twiceAreaOfTriangle = currentTwiceAreaOfTriangle;
+                }
+            }
+        }
+
+        return farthestPoint;
     }
 }
