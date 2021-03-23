@@ -14,6 +14,31 @@ public class QuickHull {
         DESTINATION
     }
 
+    // Returns the leftmost point (minimum x-coordinate).
+    public static Point getLeftmostPoint(Iterable<Point> points) {
+        if (points == null) {
+            throw new NullPointerException("The specified 'points' argument is null.");
+        }
+
+        Point leftmostPoint = null;
+
+        Iterator<Point> iterator = points.iterator();
+
+        if (iterator.hasNext()) {
+            leftmostPoint = iterator.next();
+
+            while (iterator.hasNext()) {
+                Point currentPoint = iterator.next();
+
+                if (currentPoint.x < leftmostPoint.x) {
+                    leftmostPoint = currentPoint;
+                }
+            }
+        }
+
+        return leftmostPoint;
+    }
+
     public static double calculateVectorLength(Point p) {
         return Math.sqrt(p.x * p.x + p.y * p.y);
     }
