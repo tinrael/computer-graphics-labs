@@ -43,6 +43,31 @@ public class QuickHull {
         return leftmostPoint;
     }
 
+    // Returns the rightmost point (maximum x-coordinate).
+    public static Point getRightmostPoint(Iterable<Point> points) {
+        if (points == null) {
+            throw new NullPointerException("The specified 'points' argument is null.");
+        }
+
+        Point rightmostPoint = null;
+
+        Iterator<Point> iterator = points.iterator();
+
+        if (iterator.hasNext()) {
+            rightmostPoint = iterator.next();
+
+            while (iterator.hasNext()) {
+                Point currentPoint = iterator.next();
+
+                if (currentPoint.x > rightmostPoint.x) {
+                    rightmostPoint = currentPoint;
+                }
+            }
+        }
+
+        return rightmostPoint;
+    }
+
     public static double calculateVectorLength(Point p) {
         return Math.sqrt(p.x * p.x + p.y * p.y);
     }
