@@ -14,12 +14,19 @@ import javax.swing.JPanel;
 public class DrawingPanel extends JPanel {
     private final Point origin;
 
-    public DrawingPanel(Point origin) {
+    private final Iterable<Point> points;
+
+    public DrawingPanel(Point origin, Iterable<Point> points) {
         if (origin == null) {
             throw new NullPointerException("The specified origin is null.");
         }
 
+        if (points == null) {
+            throw new NullPointerException("The specified 'points' argument is null.");
+        }
+
         this.origin = origin;
+        this.points = points;
 
         setBorder(BorderFactory.createLineBorder(Color.RED, 2));
     }
@@ -78,5 +85,9 @@ public class DrawingPanel extends JPanel {
 
         drawCoordinateAxes((Graphics2D) g);
         drawOrigin((Graphics2D) g);
+
+        for (Point point : points) {
+            drawPoint((Graphics2D) g, point, Color.RED, 7f);
+        }
     }
 }
