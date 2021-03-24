@@ -141,6 +141,7 @@ public class QuickHull {
         return farthestPoint;
     }
 
+    // TODO: fix the problem. If all the given points lie on a vertical line, the function returns an incorrect convex hull.
     // In the returned resulted ArrayList (convexHullPoints) the points are sorted in clockwise order.
     public static ArrayList<Point> findConvexHull(Iterable<Point> points) {
         if (points == null) {
