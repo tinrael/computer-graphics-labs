@@ -1,7 +1,6 @@
 package ua.knu.csc.ui;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
