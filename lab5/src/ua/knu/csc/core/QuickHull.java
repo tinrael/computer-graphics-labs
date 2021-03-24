@@ -145,18 +145,35 @@ public class QuickHull {
         ArrayList<Point> convexHullPoints = new ArrayList<>();
 
         Point leftmostPoint = getLeftmostPoint(points);
-        Point rightmostPoint = new Point(leftmostPoint.x, leftmostPoint.y - 1);
+        Point rightmostPoint = getRightmostPoint(points);
 
         convexHullPoints.add(leftmostPoint);
         convexHullPoints.add(rightmostPoint);
 
-        findConvexHull(convexHullPoints, points, leftmostPoint, rightmostPoint);
+        Set<Point> s1 = new HashSet<>();
+        Set<Point> s2 = new HashSet<>();
 
-        convexHullPoints.remove(rightmostPoint);
+        for (Point point : points) {
+            switch (classify(leftmostPoint, rightmostPoint, point)) {
+                case LEFT:
+                    s1.add(point);
+                    break;
+                case RIGHT:
+                    s2.add(point);
+                    break;
+                default:
+            }
+        }
+
+        findConvexHull(convexHullPoints, s1, leftmostPoint, rightmostPoint);
+        findConvexHull(convexHullPoints, s2, rightmostPoint, leftmostPoint);
 
         return convexHullPoints;
     }
 
+    /* From the points 's1' (these points must be on the left side of the oriented line from 'leftmostPoint' to 'rightmostPoint')
+     * finds points on convex hull.
+     */
     private static void findConvexHull(ArrayList<Point> convexHullPoints, Iterable<Point> s1, Point leftmostPoint, Point rightmostPoint) {
         if (!s1.iterator().hasNext()) {
             return;
