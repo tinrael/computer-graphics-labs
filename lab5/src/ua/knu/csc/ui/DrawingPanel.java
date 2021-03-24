@@ -1,11 +1,14 @@
 package ua.knu.csc.ui;
 
-import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Stroke;
 
 import javax.swing.BorderFactory;
@@ -15,8 +18,9 @@ public class DrawingPanel extends JPanel {
     private final Point origin;
 
     private final Iterable<Point> points;
+    private final ArrayList<Point> convexHullPoints;
 
-    public DrawingPanel(Point origin, Iterable<Point> points) {
+    public DrawingPanel(Point origin, Iterable<Point> points, ArrayList<Point> convexHullPoints) {
         if (origin == null) {
             throw new NullPointerException("The specified origin is null.");
         }
@@ -25,8 +29,13 @@ public class DrawingPanel extends JPanel {
             throw new NullPointerException("The specified 'points' argument is null.");
         }
 
+        if (convexHullPoints == null) {
+            throw new NullPointerException("The specified 'convexHullPoints' argument is null.");
+        }
+
         this.origin = origin;
         this.points = points;
+        this.convexHullPoints = convexHullPoints;
 
         setBorder(BorderFactory.createLineBorder(Color.RED, 2));
     }
@@ -90,6 +99,17 @@ public class DrawingPanel extends JPanel {
 
         drawCoordinateAxes((Graphics2D) g);
         drawOrigin((Graphics2D) g);
+
+        int size = convexHullPoints.size();
+
+        int i = 0;
+        for (; i < (size - 1); i++) {
+            drawLine((Graphics2D) g, convexHullPoints.get(i), convexHullPoints.get(i + 1), Color.BLUE, 2f);
+        }
+
+        if (size > 2) {
+            drawLine((Graphics2D) g, convexHullPoints.get(i), convexHullPoints.get(0), Color.BLUE, 2f);
+        }
 
         for (Point point : points) {
             drawPoint((Graphics2D) g, point, Color.RED, 7f);
