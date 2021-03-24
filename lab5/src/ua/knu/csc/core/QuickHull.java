@@ -141,6 +141,7 @@ public class QuickHull {
         return farthestPoint;
     }
 
+    // In the returned resulted ArrayList (convexHullPoints) the points are sorted in clockwise order.
     public static ArrayList<Point> findConvexHull(Iterable<Point> points) {
         if (points == null) {
             throw new NullPointerException("The specified 'points' argument is null.");
