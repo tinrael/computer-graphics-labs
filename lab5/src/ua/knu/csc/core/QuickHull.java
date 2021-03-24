@@ -108,7 +108,7 @@ public class QuickHull {
 
     // Calculates twice the area of a triangle.
     public static int calculateTwiceAreaOfTriangle(Point p1, Point p2, Point p3) {
-        return ((p1.x - p3.x) * (p2.y - p3.y) - (p2.x - p3.x) * (p1.y - p3.y));
+        return Math.abs((p1.x - p3.x) * (p2.y - p3.y) - (p2.x - p3.x) * (p1.y - p3.y));
     }
 
     // From the given 'points', finds the farthest point from the line segment PQ.
