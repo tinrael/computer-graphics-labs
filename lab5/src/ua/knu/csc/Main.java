@@ -29,22 +29,34 @@ public class Main {
         points.add(new Point(85, 90));
         points.add(new Point(170, 210));
         points.add(new Point(150, 180));
+        points.add(new Point(130, 290));
+        points.add(new Point(10, 200));
 
         ArrayList<Point> convexHullPoints = QuickHull.findConvexHull(points);
-        System.out.println(convexHullPoints);
+
+        System.out.print("[");
+        int size = convexHullPoints.size();
+        for (int i = 0; i < size; i++) {
+            System.out.print("(" + convexHullPoints.get(i).x + ", " + convexHullPoints.get(i).y + ")");
+
+            if (i != (size - 1)) {
+                System.out.print(", ");
+            }
+        }
+        System.out.println("]");
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                createAndShowGUI(origin, points);
+                createAndShowGUI(origin, points, convexHullPoints);
             }
         });
     }
 
-    private static void createAndShowGUI(Point origin, Set<Point> points) {
+    private static void createAndShowGUI(Point origin, Set<Point> points, ArrayList<Point> convexHullPoints) {
         JFrame mainWindow = new JFrame("lab5");
         mainWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        mainWindow.add(new DrawingPanel(origin, points));
+        mainWindow.add(new DrawingPanel(origin, points, convexHullPoints));
 
         mainWindow.pack();
 
