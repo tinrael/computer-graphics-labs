@@ -142,6 +142,10 @@ public class QuickHull {
     }
 
     public static ArrayList<Point> findConvexHull(Iterable<Point> points) {
+        if (points == null) {
+            throw new NullPointerException("The specified 'points' argument is null.");
+        }
+
         ArrayList<Point> convexHullPoints = new ArrayList<>();
 
         Point leftmostPoint = getLeftmostPoint(points);
