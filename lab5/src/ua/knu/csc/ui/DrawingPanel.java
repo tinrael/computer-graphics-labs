@@ -74,6 +74,11 @@ public class DrawingPanel extends JPanel {
         graphics2D.drawLine(x1, y1, x2, y2);
     }
 
+    private void drawString(Graphics graphics, Color color, String text, int x, int y) {
+        graphics.setColor(color);
+        graphics.drawString(text, origin.x + x, origin.y - y);
+    }
+
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(900,600);
@@ -88,6 +93,7 @@ public class DrawingPanel extends JPanel {
 
         for (Point point : points) {
             drawPoint((Graphics2D) g, point, Color.RED, 7f);
+            drawString(g, Color.BLACK, "(" + point.x + ", " + point.y + ")", point.x + 7, point.y);
         }
     }
 }
