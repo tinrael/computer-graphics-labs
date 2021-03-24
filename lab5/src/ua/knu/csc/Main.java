@@ -31,6 +31,8 @@ public class Main {
         points.add(new Point(150, 180));
         points.add(new Point(130, 290));
         points.add(new Point(10, 200));
+        points.add(new Point(300, 175));
+        points.add(new Point(170, 210));
 
         ArrayList<Point> convexHullPoints = QuickHull.findConvexHull(points);
 
