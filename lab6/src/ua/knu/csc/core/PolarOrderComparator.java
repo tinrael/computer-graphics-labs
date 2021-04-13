@@ -18,8 +18,8 @@ public class PolarOrderComparator implements Comparator<Point> {
      * breaking ties by the distance to the point 'origin'.
      * Formally, the point 'p1' is less than the point 'p2' if and only if either
      * 1) the polar angle the point 'p1' makes with respect to the point 'origin' is less than the polar angle of the point 'p2'
-     * 2) or if polar angles are equal and p1.x < p2.x
-     * 3) or if polar angles are equal, p1.x == 0, p2.x == 0 and p1.y < p2.y.
+     * 2) or if polar angles are equal and Math.abs(p1.x) < Math.abs(p2.x)
+     * 3) or if polar angles are equal, p1.x == 0, p2.x == 0 and Math.abs(p1.y) < Math.abs(p2.y).
      */
     @Override
     public int compare(Point p1, Point p2) {
@@ -39,15 +39,15 @@ public class PolarOrderComparator implements Comparator<Point> {
             } else if ((x2 >= 0) && (x1 < 0)) {
                 return 1;
             } else {
-                return Integer.compare(x1, x2);
+                return Integer.compare(Math.abs(x1), Math.abs(x2));
             }
         } else { // both p1 and p2 above or below
             if ((x1 == 0) && (x2 == 0)) { // 3-collinear and vertical
-                return Integer.compare(y1, y2);
+                return Integer.compare(Math.abs(y1), Math.abs(y2));
             } else {
                 int twiceSignedAreaOfTriangle = ConvexHull.calculateTwiceSignedAreaOfTriangle(origin, p1, p2);
                 if (twiceSignedAreaOfTriangle == 0) { // 3-collinear
-                    return Integer.compare(x1, x2);
+                    return Integer.compare(Math.abs(x1), Math.abs(x2));
                 } else {
                     return -twiceSignedAreaOfTriangle;
                 }
