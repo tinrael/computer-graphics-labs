@@ -52,7 +52,7 @@ public class Main {
     }
 
     private static void createAndShowGUI(Point origin, ArrayList<Point> points, ArrayList<Point> convexHullPoints) {
-        JFrame mainWindow = new JFrame("lab5");
+        JFrame mainWindow = new JFrame("lab6");
         mainWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         mainWindow.add(new DrawingPanel(origin, points, convexHullPoints));
