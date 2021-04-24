@@ -23,6 +23,10 @@ public class ConvexHull {
             throw new NullPointerException("The specified list of points 'points' is null.");
         }
 
+        if (points.isEmpty()) {
+            throw new IllegalArgumentException("The specified list of points 'points' is empty.");
+        }
+
         Queue<Point> queue = new LinkedList<>(points); // P
         Stack<Point> stack = new Stack<>(); // Q
 
