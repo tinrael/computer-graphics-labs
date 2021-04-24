@@ -2,6 +2,7 @@ package ua.knu.csc.core;
 
 import java.util.Queue;
 import java.util.Stack;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -17,7 +18,7 @@ public class ConvexHull {
         return (b.x - a.x) * (c.y - a.y) - (c.x - a.x) * (b.y - a.y);
     }
 
-    public static Point[] applyLeeAlgorithm(ArrayList<Point> points) {
+    public static List<Point> applyLeeAlgorithm(ArrayList<Point> points) {
         if (points == null) {
             throw new NullPointerException("The specified list of points 'points' is null.");
         }
@@ -73,9 +74,10 @@ public class ConvexHull {
             previousToV = v;
         }
 
-        stack.push(qM);
-        stack.remove(0); // to remove q0
+        List<Point> convexHull = new LinkedList<>(stack);
+        convexHull.remove(0); // to remove q0
+        convexHull.add(qM);
 
-        return (Point[]) stack.toArray();
+        return convexHull;
     }
 }
