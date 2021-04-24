@@ -1,5 +1,10 @@
 package ua.knu.csc.core;
 
+import java.util.Queue;
+import java.util.Stack;
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 import java.awt.Point;
 
 public class ConvexHull {
@@ -10,5 +15,67 @@ public class ConvexHull {
      */
     public static int calculateTwiceSignedAreaOfTriangle(Point a, Point b, Point c) {
         return (b.x - a.x) * (c.y - a.y) - (c.x - a.x) * (b.y - a.y);
+    }
+
+    public static Point[] applyLeeAlgorithm(ArrayList<Point> points) {
+        if (points == null) {
+            throw new NullPointerException("The specified list of points 'points' is null.");
+        }
+
+        Queue<Point> queue = new LinkedList<>(points); // P
+        Stack<Point> stack = new Stack<>(); // Q
+
+        Point p1 = queue.poll();
+        Point q0 = new Point(p1.x, p1.y - 1);
+
+        stack.push(q0);
+        stack.push(p1);
+
+        Point u = q0;
+
+        Point qM = points.get(points.size() - 1); // q_{M}
+
+        Point previousToV = p1; // the point that immediately precedes the point v (the current point)
+        while (!queue.isEmpty()) {
+            Point v = queue.poll(); // the current point
+
+            Point q2 = stack.pop(); // q_{i}
+            Point q1 = stack.peek(); // q_{i-1}
+            stack.push(q2);
+
+            if (calculateTwiceSignedAreaOfTriangle(q1, q2, v) < 0) { // regions 1, 3, 4
+                if (calculateTwiceSignedAreaOfTriangle(u, q2, v) < 0) { // regions 3, 4
+                    if (calculateTwiceSignedAreaOfTriangle(qM, q2, v) < 0) { // region 3
+                        stack.push(v);
+                        u = previousToV;
+                    } else { // region 4
+                        while (!queue.isEmpty() && calculateTwiceSignedAreaOfTriangle(qM, q2, queue.peek()) >= 0) {
+                            v = queue.poll();
+                        }
+                    }
+                } else { // region 1
+                    while (calculateTwiceSignedAreaOfTriangle(q2, q1, queue.peek()) >= 0) {
+                        v = queue.poll();
+                    }
+                }
+            } else { // region 2
+                while (calculateTwiceSignedAreaOfTriangle(q1, q2, v) > 0) {
+                    stack.pop(); // to remove the current q_{i}
+
+                    q2 = stack.pop(); // to access a new q_{i}
+                    q1 = stack.peek(); // to access a new q_{i-1}
+                    stack.push(q2);
+                }
+                stack.push(v);
+                u = previousToV;
+            }
+
+            previousToV = v;
+        }
+
+        stack.push(qM);
+        stack.remove(0); // to remove q0
+
+        return (Point[]) stack.toArray();
     }
 }
