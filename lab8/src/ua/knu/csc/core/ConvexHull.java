@@ -5,6 +5,7 @@ import java.util.Stack;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.ListIterator;
 
 import java.awt.Point;
 
@@ -21,6 +22,33 @@ public class ConvexHull {
      */
     public static int calculateTwiceSignedAreaOfTriangle(Point a, Point b, Point c) {
         return (b.x - a.x) * (c.y - a.y) - (c.x - a.x) * (b.y - a.y);
+    }
+
+    public static List<Point> findConvexHullOfSimplePolygon(List<Point> simplePolygon) {
+        ListIterator<Point> listIterator = simplePolygon.listIterator();
+
+        Point leftmostPoint = listIterator.next();
+        int leftmostPointIndex = listIterator.previousIndex();
+
+        Point rightmostPoint = leftmostPoint;
+        int rightmostPointIndex = leftmostPointIndex;
+
+        while (listIterator.hasNext()) {
+            Point currentPoint = listIterator.next();
+
+            if (currentPoint.x < leftmostPoint.x) {
+                leftmostPoint = currentPoint;
+                leftmostPointIndex = listIterator.previousIndex();
+            } else if (currentPoint.x > rightmostPoint.x) {
+                rightmostPoint = currentPoint;
+                rightmostPointIndex = listIterator.previousIndex();
+            }
+        }
+
+        List<Point> upperHull;
+        List<Point> lowerHull;
+
+        return null;
     }
 
     // The parameter 'part' specify which part of a simple polygon passed as the parameter 'points'.
