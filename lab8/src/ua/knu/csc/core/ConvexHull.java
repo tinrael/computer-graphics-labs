@@ -9,6 +9,11 @@ import java.util.LinkedList;
 import java.awt.Point;
 
 public class ConvexHull {
+    public enum Part {
+        UPPER,
+        LOWER
+    }
+
     /* Calculates twice the signed area of the triangle a->b->c.
      * If signed area > 0, then a->b->c is counterclockwise (c to the left of the ray a->b, i.e. left turn).
      * If signed area < 0, then a->b->c is clockwise (c to the right of the ray a->b, i.e. right turn).
@@ -18,7 +23,8 @@ public class ConvexHull {
         return (b.x - a.x) * (c.y - a.y) - (c.x - a.x) * (b.y - a.y);
     }
 
-    public static List<Point> applyLeeAlgorithm(ArrayList<Point> points) {
+    // The parameter 'part' specify which part of a simple polygon passed as the parameter 'points'.
+    public static List<Point> applyLeeAlgorithm(ArrayList<Point> points, Part part) {
         if (points == null) {
             throw new NullPointerException("The specified list of points 'points' is null.");
         }
@@ -31,7 +37,11 @@ public class ConvexHull {
         Stack<Point> stack = new Stack<>(); // Q
 
         Point p1 = queue.poll();
-        Point q0 = new Point(p1.x, p1.y - 1);
+        Point q0 = switch (part) {
+            case UPPER -> new Point(p1.x, p1.y - 1);
+            case LOWER -> new Point(p1.x, p1.y + 1);
+            default -> throw new IllegalArgumentException("The specified part 'part' is illegal.");
+        };
 
         stack.push(q0);
         stack.push(p1);
