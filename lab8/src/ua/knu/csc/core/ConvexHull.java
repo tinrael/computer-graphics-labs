@@ -52,7 +52,7 @@ public class ConvexHull {
     }
 
     // The parameter 'part' specify which part of a simple polygon passed as the parameter 'points'.
-    public static List<Point> applyLeeAlgorithm(ArrayList<Point> points, Part part) {
+    public static List<Point> applyLeeAlgorithm(List<Point> points, Part part) {
         if (points == null) {
             throw new NullPointerException("The specified list of points 'points' is null.");
         }
