@@ -3,6 +3,7 @@ package ua.knu.csc;
 import ua.knu.csc.core.ConvexHull;
 import ua.knu.csc.ui.DrawingPanel;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -43,6 +44,18 @@ public class Main {
         simplePolygon.add(new Point(320, 240));
 
         List<Point> convexHull = ConvexHull.findConvexHullOfSimplePolygon(simplePolygon);
+
+        System.out.print("Convex hull of a simple polygon: [");
+        Iterator<Point> iterator = convexHull.iterator();
+        while (iterator.hasNext()) {
+            Point point = iterator.next();
+            System.out.print("(" + point.x + ", " + point.y + ")");
+
+            if (iterator.hasNext()) {
+                System.out.print(", ");
+            }
+        }
+        System.out.println("]");
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
