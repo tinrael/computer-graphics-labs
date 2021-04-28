@@ -25,6 +25,14 @@ public class ConvexHull {
     }
 
     public static List<Point> findConvexHullOfSimplePolygon(List<Point> simplePolygon) {
+        if (simplePolygon == null) {
+            throw new NullPointerException("The specified parameter 'simplePolygon' is null.");
+        }
+
+        if (simplePolygon.isEmpty()) {
+            return new LinkedList<>();
+        }
+
         ListIterator<Point> listIterator = simplePolygon.listIterator();
 
         Point leftmostPoint = listIterator.next();
