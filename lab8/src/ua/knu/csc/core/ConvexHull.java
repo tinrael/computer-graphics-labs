@@ -66,6 +66,9 @@ public class ConvexHull {
 
         upperHull.addAll(lowerHull); // the convex hull of a simple polygon
 
+        // remove previously added point 'leftmostPoint' to save the list 'simplePolygon' unchanged
+        simplePolygon.remove(simplePolygon.size() - 1);
+
         return upperHull;
     }
 
