@@ -45,10 +45,20 @@ public class ConvexHull {
             }
         }
 
-        List<Point> upperHull;
-        List<Point> lowerHull;
+        simplePolygon.add(leftmostPoint);
 
-        return null;
+        // upper-hull
+        List<Point> upperHull = applyLeeAlgorithm(simplePolygon.subList(leftmostPointIndex, rightmostPointIndex + 1), Part.UPPER);
+
+        // lower-hull
+        List<Point> lowerHull = applyLeeAlgorithm(simplePolygon.subList(rightmostPointIndex, simplePolygon.size()), Part.LOWER);
+
+        lowerHull.remove(0); // to remove the rightmost point as it is already in the upper-hull
+        lowerHull.remove(lowerHull.size() - 1); // to remove the leftmost point as it is already in the upper-hull
+
+        upperHull.addAll(lowerHull); // the convex hull of a simple polygon
+
+        return upperHull;
     }
 
     // The parameter 'part' specify which part of a simple polygon passed as the parameter 'points'.
