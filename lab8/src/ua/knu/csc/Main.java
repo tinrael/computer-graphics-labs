@@ -17,21 +17,21 @@ import javax.swing.WindowConstants;
 public class Main {
 
     public static void main(String[] args) {
-        Point origin = new Point(50, 500);
+        Point origin = new Point(50, 550);
 
         List<Point> simplePolygon = new ArrayList<>();
 
         simplePolygon.add(new Point(140, 160));
         simplePolygon.add(new Point(140, 380));
-        simplePolygon.add(new Point(280, 460));
+        simplePolygon.add(new Point(280, 430));
         simplePolygon.add(new Point(360, 300));
         simplePolygon.add(new Point(480, 360));
-        simplePolygon.add(new Point(380, 400));
-        simplePolygon.add(new Point(560, 460));
+        simplePolygon.add(new Point(420, 380));
+        simplePolygon.add(new Point(560, 430));
         simplePolygon.add(new Point(560, 320));
         simplePolygon.add(new Point(640, 320));
         simplePolygon.add(new Point(640, 400));
-        simplePolygon.add(new Point(740, 460));
+        simplePolygon.add(new Point(740, 500));
         simplePolygon.add(new Point(800, 220));
         simplePolygon.add(new Point(600, 260));
         simplePolygon.add(new Point(540, 180));
