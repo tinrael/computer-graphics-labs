@@ -112,7 +112,7 @@ public class DrawingPanel extends JPanel {
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(900,600);
+        return new Dimension(950,600);
     }
 
     @Override
