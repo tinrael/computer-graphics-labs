@@ -21,7 +21,26 @@ public class Main {
 
         List<Point> simplePolygon = new ArrayList<>();
 
-        simplePolygon.add(new Point(60, 110));
+        simplePolygon.add(new Point(140, 160));
+        simplePolygon.add(new Point(140, 380));
+        simplePolygon.add(new Point(280, 460));
+        simplePolygon.add(new Point(360, 300));
+        simplePolygon.add(new Point(480, 360));
+        simplePolygon.add(new Point(380, 400));
+        simplePolygon.add(new Point(560, 460));
+        simplePolygon.add(new Point(560, 320));
+        simplePolygon.add(new Point(640, 320));
+        simplePolygon.add(new Point(640, 400));
+        simplePolygon.add(new Point(740, 460));
+        simplePolygon.add(new Point(800, 220));
+        simplePolygon.add(new Point(600, 260));
+        simplePolygon.add(new Point(540, 180));
+        simplePolygon.add(new Point(500, 260));
+        simplePolygon.add(new Point(400, 180));
+        simplePolygon.add(new Point(540, 120));
+        simplePolygon.add(new Point(500, 80));
+        simplePolygon.add(new Point(320, 80));
+        simplePolygon.add(new Point(320, 240));
 
         List<Point> convexHull = ConvexHull.findConvexHullOfSimplePolygon(simplePolygon);
 
