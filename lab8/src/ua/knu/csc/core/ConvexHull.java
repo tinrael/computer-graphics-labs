@@ -74,7 +74,7 @@ public class ConvexHull {
         Queue<Point> queue = new LinkedList<>(points); // P
         Stack<Point> stack = new Stack<>(); // Q
 
-        Point p1 = queue.poll();
+        Point p1 = queue.poll(); // the leftmost point
         Point q0 = switch (part) {
             case UPPER -> new Point(p1.x, p1.y - 1);
             case LOWER -> new Point(p1.x, p1.y + 1);
@@ -86,7 +86,7 @@ public class ConvexHull {
 
         Point u = q0;
 
-        Point qM = points.get(points.size() - 1); // q_{M}
+        Point qM = points.get(points.size() - 1); // q_{M} (the rightmost point)
 
         Point previousToV = p1; // the point that immediately precedes the point v (the current point)
         while (!queue.isEmpty()) {
