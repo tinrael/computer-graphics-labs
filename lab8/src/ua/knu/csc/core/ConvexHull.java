@@ -23,6 +23,11 @@ public class ConvexHull {
         return (b.x - a.x) * (c.y - a.y) - (c.x - a.x) * (b.y - a.y);
     }
 
+    /* This function assumes the specified simple polygon 'simplePolygon' to be clockwise-ordered.
+     *
+     * TODO: This function also assumes that simplePolygon.get(0) is the leftmost point.
+     *  A possible solution to remove this restriction is to use a circular list for a simple polygon 'simplePolygon'.
+     */
     public static List<Point> findConvexHullOfSimplePolygon(List<Point> simplePolygon) {
         if (simplePolygon == null) {
             throw new NullPointerException("The specified parameter 'simplePolygon' is null.");
@@ -71,7 +76,10 @@ public class ConvexHull {
         return upperHull;
     }
 
-    // The parameter 'part' specify which part of a simple polygon passed as the parameter 'points'.
+    /* The parameter 'part' specify which part of a simple polygon passed as the parameter 'points'.
+     * This function assumes the specified part of a simple polygon (i.e. the parameter 'points') to be clockwise-ordered.
+     * This function also assumes that points.get(0) is the leftmost point and that points.get(points.size() - 1) is the rightmost point.
+     */
     public static List<Point> applyLeeAlgorithm(List<Point> points, Part part) {
         if (points == null) {
             throw new NullPointerException("The specified list of points 'points' is null.");
