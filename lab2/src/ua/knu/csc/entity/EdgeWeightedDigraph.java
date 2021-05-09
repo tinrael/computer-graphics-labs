@@ -5,7 +5,9 @@ import java.util.*;
 // Edge-weighted digraph
 public class EdgeWeightedDigraph {
     private final Map<Vertex, List<DirectedEdge>> adjacencyList = new HashMap<>();
-    private final Map<Vertex, Integer> indegree = new HashMap<>();
+
+    // indegree.get(v) = list of directed edges incident to vertex 'v'.
+    private final Map<Vertex, List<DirectedEdge>> indegree = new HashMap<>();
 
     // Checks if the specified vertex is in the graph.
     private void validateVertex(Vertex vertex) {
@@ -19,7 +21,7 @@ public class EdgeWeightedDigraph {
             throw new NullPointerException("The specified vertex is null.");
         }
         adjacencyList.putIfAbsent(vertex, new LinkedList<>());
-        indegree.putIfAbsent(vertex, 0);
+        indegree.putIfAbsent(vertex, new LinkedList<>());
     }
 
     public void addDirectedEdge(DirectedEdge directedEdge) {
@@ -30,8 +32,7 @@ public class EdgeWeightedDigraph {
         validateVertex(to);
 
         adjacencyList.get(from).add(directedEdge);
-
-        indegree.put(to, indegree.get(to) + 1);
+        indegree.get(to).add(directedEdge);
     }
 
     // Returns all directed edges in this edge-weighted digraph.
@@ -45,6 +46,12 @@ public class EdgeWeightedDigraph {
         return edges;
     }
 
+    // Returns the directed edges incident to vertex.
+    public Iterable<DirectedEdge> getVerticesAdjacentTo(Vertex vertex) {
+        validateVertex(vertex);
+        return indegree.get(vertex);
+    }
+
     // Returns the directed edges incident from vertex.
     public Iterable<DirectedEdge> getVerticesAdjacentFrom(Vertex vertex) {
         validateVertex(vertex);
@@ -54,7 +61,7 @@ public class EdgeWeightedDigraph {
     // Returns the number of directed edges incident to vertex.
     public int getIndegree(Vertex vertex) {
         validateVertex(vertex);
-        return indegree.get(vertex);
+        return indegree.get(vertex).size();
     }
 
     // Returns the number of directed edges incident from vertex.
