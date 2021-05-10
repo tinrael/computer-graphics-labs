@@ -30,6 +30,7 @@ public class EvenOddRule {
         return Math.sqrt(p.x * p.x + p.y * p.y);
     }
 
+    // Determines the location of the point 'p2' concerning the oriented from 'p0' to 'p1' straight line segment.
     public static PointAndLineLocationType classify(Point p0, Point p1, Point p2) {
         Point a = new Point(p1.x - p0.x, p1.y - p0.y); // p1 - p0 (vector subtraction)
         Point b = new Point(p2.x - p0.x, p2.y - p0.y); // p2 - p0 (vector subtraction)
